@@ -90,7 +90,7 @@ const MyTask = () => {
           <div className="border-[0.5px] border-[#B8B6B6] mt-10 rounded-[10px] w-[1053px] h-[250px] ml-39 ">
             <div className="flex justify-between   mt-8 border-[#B8B6B6] max-w-[1030px] mx-auto  border-b-[0.5px]">
               <h5 className="font-normal text-[#F38383] text-[20px] ml-3 mt-3">
-                Urgent
+                {task.tags}
               </h5>
 
               <div className="flex  mr-8 gap-8 mb-3">
