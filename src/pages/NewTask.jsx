@@ -8,10 +8,8 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { ChevronDown, X } from "lucide-react";
 
-
 const NewTask = () => {
   const navigate = useNavigate();
- 
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -27,13 +25,16 @@ const NewTask = () => {
     const newTask = { title, description, tags };
 
     try {
-      const postNewTask = await fetch("https://task-manager-backend-hyt8.onrender.com/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      });
+      const postNewTask = await fetch(
+        "https://task-manager-backend-hyt8.onrender.com/api/tasks",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newTask),
+        }
+      );
 
       if (postNewTask.ok) {
         navigate("/mytask");
@@ -129,9 +130,9 @@ const NewTask = () => {
         </div>
 
         <div className="w-[1030px]  mx-auto relative mt-16">
-          <input
-            id="taskTitle"
-            name="taskTitle"
+          <select
+            id="tags"
+            name="tags"
             type="text"
             placeholder="Urgent or Important"
             className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
@@ -140,7 +141,11 @@ const NewTask = () => {
               setTags(event.target.value);
             }}
             required
-          />
+          >
+            <option value="">...select Tag ---</option>
+            <option value="Urgent"> Urgent </option>
+            <option value="Important"> Important</option>
+          </select>
 
           <label
             htmlFor="Tags"
