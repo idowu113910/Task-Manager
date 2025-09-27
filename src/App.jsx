@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<CoverPage />} />
           <Route path="/newtask" element={<NewTask />} />
-          <Route path="/edittask" element={<EditTask />} />
+          <Route path="/edittask/:id" element={<EditTask />} />
           <Route path="/mytask" element={<MyTask />} />
         </Routes>
       </BrowserRouter>

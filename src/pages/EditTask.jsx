@@ -4,9 +4,54 @@ import arr from "../assets/back arrow.png";
 import { Link, useNavigate } from "react-router-dom";
 import task from "../assets/Task duty.png";
 import head from "../assets/head image.png";
+import axios from "axios";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const EditTask = () => {
   const navigate = useNavigate();
+  const { id } = useParams(); // if your route is /edittask/:id
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
+
+  useEffect(() => {
+    // fetch task to prefill the form
+    async function fetchTask() {
+      try {
+        const res = await axios.get(
+          `https://task-manager-backend-hyt8.onrender.com/api/tasks/${id}`
+        );
+        setTitle(res.data.title || "");
+        setDescription(res.data.description || "");
+        setTags(res.data.tags || "");
+      } catch (err) {
+        console.error("Fetch task error:", err);
+      }
+    }
+    if (id) fetchTask();
+  }, [id]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // IMPORTANT — stop full page reload
+    try {
+      // update (or create) on backend
+      await axios.put(
+        `https://task-manager-backend-hyt8.onrender.com/api/tasks/${id}`,
+        {
+          title,
+          description,
+          tags,
+        }
+      );
+      // navigate after success
+      navigate("/mytask"); // <-- change to correct route
+    } catch (err) {
+      console.error("Save error:", err);
+      // optionally show user-friendly UI message
+    }
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -37,71 +82,84 @@ const EditTask = () => {
       </nav>
 
       <div className="flex mt-16 px-35">
-        <img src={arr} alt="" className="w-[60px] h-[60px] mt-1" />
+        <img
+          src={arr}
+          alt=""
+          onClick={() => {
+            navigate("/mytask");
+          }}
+          className="w-[60px] h-[60px] mt-1"
+        />
 
         <h4 className=" text-[40px] mt-1 font-medium">Edit Task</h4>
       </div>
 
-      <div className="w-[1030px]  mx-auto relative mt-16">
-        <input
-          id="taskTitle"
-          name="taskTitle"
-          type="text"
-          placeholder="E.g Project Defense, Assignment..."
-          className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
-        />
+      <form onSubmit={handleSubmit} action="">
+        <div className="w-[1030px]  mx-auto relative mt-16">
+          <input
+            id="taskTitle"
+            name="taskTitle"
+            type="text"
+            placeholder="E.g Project Defense, Assignment..."
+            className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
 
-        <label
-          htmlFor="taskTitle"
-          className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
-        >
-          Task Title
-        </label>
-      </div>
+          <label
+            htmlFor="taskTitle"
+            className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
+          >
+            Task Title
+          </label>
+        </div>
 
-      <div className="w-[1030px]  mx-auto relative mt-16">
-        <input
-          id="taskTitle"
-          name="taskTitle"
-          type="text"
-          placeholder="Briefly describe your task..."
-          className="w-full border border-gray-300 h-[240px] px-4  pb-40 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
-        />
+        <div className="w-[1030px]  mx-auto relative mt-16">
+          <input
+            id="taskTitle"
+            name="taskTitle"
+            type="text"
+            placeholder="Briefly describe your task..."
+            className="w-full border border-gray-300 h-[240px] px-4  pb-40 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
 
-        <label
-          htmlFor="Description"
-          className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
-        >
-          Description
-        </label>
-      </div>
+          <label
+            htmlFor="Description"
+            className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
+          >
+            Description
+          </label>
+        </div>
 
-      <div className="w-[1030px]  mx-auto relative mt-16">
-        <input
-          id="taskTitle"
-          name="taskTitle"
-          type="text"
-          className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
-        />
+        <div className="w-[1030px]  mx-auto relative mt-16">
+          <input
+            id="taskTitle"
+            name="taskTitle"
+            type="text"
+            className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
+            onChange={(e) => setTags(e.target.value)}
+            required
+          />
 
-        <label
-          htmlFor="Tags"
-          className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
-        >
-          Tags
-        </label>
-      </div>
+          <label
+            htmlFor="Tags"
+            className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
+          >
+            Tags
+          </label>
+        </div>
 
-      <div className="bg-[#974FD0] text-white w-[1040px] mx-auto text-center mt-10 rounded-[8px] py-[10px] px-[25px]">
         <button
-          onClick={() => {
-            navigate("/mytask");
-          }}
-          className="text-[25px] font-medium"
+          type="submit"
+          className="text-[25px] ml-40 font-medium bg-[#974FD0] text-white w-[1040px] mx-auto text-center mt-10 rounded-[8px] py-[10px] px-[25px]"
         >
           Done
         </button>
-      </div>
+      </form>
 
       <p
         className="text-[#974FD0] underline mt-8 text-center cursor-pointer"
