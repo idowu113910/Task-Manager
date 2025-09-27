@@ -110,7 +110,7 @@ const MyTask = () => {
                   <p className="text-[#FAF9FB] font-medium">Edit</p>
                 </Link>
 
-                <div className="flex bg-[#FFFFFF] border border-[#974FD0] text-[#974FD0] rounded-[8px]  px-[20px] py-[10px] cursor-pointer gap-[10px]">
+                <div className="flex bg-[#FFFFFF] border border-[#974FD0] text-[#974FD0] rounded-[8px]  px-[20px] py-[10px]  gap-[10px]">
                   <img src={del} alt="" />
                   <button
                     onClick={() => {

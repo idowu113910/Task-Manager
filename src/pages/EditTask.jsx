@@ -34,22 +34,23 @@ const EditTask = () => {
   }, [id]);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // IMPORTANT — stop full page reload
+    event.preventDefault();
+
     try {
-      // update (or create) on backend
-      await axios.put(
+      const response = await axios.put(
         `https://task-manager-backend-hyt8.onrender.com/api/tasks/${id}`,
         {
-          title,
-          description,
-          tags,
+          title: title.trim(),
+          description: description.trim(),
+          tags: tags || "",
         }
       );
-      // navigate after success
-      navigate("/mytask"); // <-- change to correct route
+
+      console.log("Success:", response.data);
+      navigate("/mytask");
     } catch (err) {
-      console.error("Save error:", err);
-      // optionally show user-friendly UI message
+      console.log("Error details:", err.response?.data || err.message);
+      alert("Update failed. Check console for details.");
     }
   };
 
@@ -135,21 +136,26 @@ const EditTask = () => {
           </label>
         </div>
 
-        <div className="w-[1030px]  mx-auto relative mt-16">
-          <input
-            id="taskTitle"
-            name="taskTitle"
-            type="text"
-            className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
-            onChange={(e) => setTags(e.target.value)}
-            required
-          />
+        <div className="w-[1030px] mx-auto relative mt-16">
+          <select
+            id="tags"
+            name="tags"
+            className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-[16px] bg-white"
+            value={tags}
+            onChange={(event) => {
+              setTags(event.target.value);
+            }}
+          >
+            <option value="">Select priority...</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Important">Important</option>
+          </select>
 
           <label
-            htmlFor="Tags"
+            htmlFor="tags" // Fixed: now matches id
             className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
           >
-            Tags
+            Priority
           </label>
         </div>
 
