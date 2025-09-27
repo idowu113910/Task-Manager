@@ -89,7 +89,15 @@ const MyTask = () => {
         return (
           <div className="border-[0.5px] border-[#B8B6B6] mt-10 rounded-[10px] w-[1053px] h-[250px] ml-39 ">
             <div className="flex justify-between   mt-8 border-[#B8B6B6] max-w-[1030px] mx-auto  border-b-[0.5px]">
-              <h5 className="font-normal text-[#F38383] text-[20px] ml-3 mt-3">
+              <h5
+                className={`font-normal text-[#F38383] text-[20px] ml-3 mt-3 ${
+                  task.tags === "Urgent"
+                    ? "text-[#F38383]"
+                    : task.tags === "Important"
+                    ? "text-green-500"
+                    : "text-gray-500"
+                }`}
+              >
                 {task.tags}
               </h5>
 

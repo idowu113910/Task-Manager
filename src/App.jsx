@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import CoverPage from "./pages/CoverPage";
 import NewTask from "./pages/NewTask";
 import EditTask from "./pages/EditTask";
@@ -8,14 +8,14 @@ import "./App.css";
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<CoverPage />} />
           <Route path="/newtask" element={<NewTask />} />
           <Route path="/edittask/:id" element={<EditTask />} />
           <Route path="/mytask" element={<MyTask />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
