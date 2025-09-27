@@ -129,28 +129,28 @@ const NewTask = () => {
           </label>
         </div>
 
-        <div className="w-[1030px]  mx-auto relative mt-16">
-          <input
+        <div className="w-[1030px] mx-auto relative mt-16">
+          <select
             id="tags"
             name="tags"
-            type="text"
-            placeholder="Urgent or Important"
-            className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
+            className="w-full border border-gray-300 h-[84px] px-4 pt-5 pb-3 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-[16px] bg-white"
             value={tags}
             onChange={(event) => {
               setTags(event.target.value);
             }}
-            required
-          />
+          >
+            <option value="">Select priority...</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Important">Important</option>
+          </select>
 
           <label
-            htmlFor="Tags"
+            htmlFor="tags" // Fixed: now matches id
             className="absolute left-4 -top-3 bg-white px-2 text-[18px] text-[#9C9C9C]"
           >
-            Tags
+            Priority
           </label>
         </div>
-
         <button
           type="submit"
           className="text-[25px] font-medium  bg-[#974FD0] text-white w-[1040px] mx-auto text-center mt-10 rounded-[8px] py-[10px] px-[25px]"
