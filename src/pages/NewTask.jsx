@@ -130,7 +130,7 @@ const NewTask = () => {
         </div>
 
         <div className="w-[1030px]  mx-auto relative mt-16">
-          <select
+          <input
             id="tags"
             name="tags"
             type="text"
@@ -141,11 +141,7 @@ const NewTask = () => {
               setTags(event.target.value);
             }}
             required
-          >
-            <option value="">...select Tag ---</option>
-            <option value="Urgent"> Urgent </option>
-            <option value="Important"> Important</option>
-          </select>
+          />
 
           <label
             htmlFor="Tags"
