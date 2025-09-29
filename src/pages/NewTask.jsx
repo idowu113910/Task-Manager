@@ -120,7 +120,7 @@ const NewTask = () => {
               name="taskTitle"
               type="text"
               placeholder="Briefly describe your task..."
-              className="w-full border border-gray-300 h-[240px] px-4  pb-40 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400"
+              className="w-full border border-gray-300 h-[240px] px-4 pt-4.5  pb-40 pl-6 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-[16px] placeholder-gray-400 "
               value={description}
               onChange={(event) => {
                 setDescription(event.target.value);
@@ -290,9 +290,9 @@ const NewTask = () => {
                 setTags(event.target.value);
               }}
             >
-              <option value="">Select priority...</option>
-              <option value="Urgent">Urgent</option>
-              <option value="Important">Important</option>
+              <option  value="">Select priority...</option>
+              <option  className="text-red-600" value="Urgent">Urgent</option>
+              <option className="text-green-600" value="Important">Important</option>
             </select>
             <label
               htmlFor="tags"
